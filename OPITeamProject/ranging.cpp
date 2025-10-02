@@ -22,7 +22,7 @@ map<string, vector<int>> getSum(map<string, vector<int>> members, vector<string>
         int sum = prev + submitting + attended;
 
         if (submitting == current) {
-            sum -= 10;
+            sum -= 11;
         }
 
         string sname = surnames[i];

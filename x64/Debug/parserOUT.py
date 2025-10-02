@@ -1,72 +1,55 @@
-import os
-import pickle
+﻿import os
 import csv
 from googleapiclient.discovery import build
+from auth_utils import get_credentials  # ✅ подключаем функцию
 
-# Function to upload data from a CSV file to Google Sheets
+# Загрузка данных из CSV в Google Sheets
 def upload_csv_to_gsheet(csv_file_path, spreadsheet_id, worksheet_name, credentials_path):
-    """Uploads data from a CSV file to Google Sheets."""
     try:
-        # Check if the credentials file exists
-        if not os.path.exists(credentials_path):
-            raise FileNotFoundError(f"Credentials file {credentials_path} not found. Please perform authentication.")
-        
-        # Authentication using the token file
-        with open(credentials_path, 'rb') as token:
-            credentials = pickle.load(token)
+        # Получаем всегда валидный токен
+        credentials = get_credentials(token_path=credentials_path, creds_path="credentials.json")
 
-        # Create the API client
+        # Создаем API клиент
         service = build('sheets', 'v4', credentials=credentials)
 
-        # Check if the CSV file exists
         if not os.path.exists(csv_file_path):
-            raise FileNotFoundError(f"CSV file {csv_file_path} not found.")
-        
-        # Read the CSV file
+            raise FileNotFoundError(f"CSV файл {csv_file_path} не найден.")
+
+        # Читаем CSV
         with open(csv_file_path, 'r', encoding='cp1251') as csvfile:
             reader = csv.reader(csvfile)
             values = list(reader)
 
-        # Write the data to Google Sheets
-        body = {
-            'values': values
-        }
-        range_name = worksheet_name
-        result = service.spreadsheets().values().update(
+        # Пишем в Google Sheets
+        body = {'values': values}
+        service.spreadsheets().values().update(
             spreadsheetId=spreadsheet_id,
-            range=range_name,
+            range=worksheet_name,
             valueInputOption="RAW",
             body=body
         ).execute()
 
-        print(f"Data from file {csv_file_path} successfully uploaded to Google Sheets.")
+        print(f"✅ Данные из {csv_file_path} загружены в {spreadsheet_id}:{worksheet_name}")
     except Exception as e:
-        print(f"Error uploading data: {e}")
+        print(f"Ошибка при загрузке: {e}")
+
 
 if __name__ == "__main__":
-    # Console input
-    print("Enter data to upload to Google Sheets:")
+    print("Введите данные для загрузки в Google Sheets:")
 
-    # Spreadsheet ID
-    spreadsheet_id = ""
     with open("id.csv", 'r', newline='', encoding='cp1251') as csvfile:
-            spreadsheet_id = csvfile.read().strip()
-    worksheet_name = input("Worksheet name for save sorted data(for example, 'Sheet1'): ").strip()
+        spreadsheet_id = csvfile.read().strip()
 
-    # Path to the CSV file with default handling
-    csv_file_path = ""
+    worksheet_name = input("Worksheet name (например 'Sheet1'): ").strip()
+
     with open("pathfile.csv", 'r', newline='', encoding='cp1251') as csvfile:
-            csv_file_path = csvfile.read().strip()
+        csv_file_path = csvfile.read().strip()
     if csv_file_path.lower() == 'd' or not csv_file_path:
         csv_file_path = 'output.csv'
 
-
-    # Path to the credentials token file with default handling
-    credentials_path = ""
     with open("pathtoken.csv", 'r', newline='', encoding='cp1251') as csvfile:
-            credentials_path = csvfile.read().strip()
+        credentials_path = csvfile.read().strip()
     if credentials_path.lower() == 'd' or not credentials_path:
         credentials_path = 'token.pickle'
 
-    # Call the function
     upload_csv_to_gsheet(csv_file_path, spreadsheet_id, worksheet_name, credentials_path)

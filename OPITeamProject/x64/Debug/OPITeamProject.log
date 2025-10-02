@@ -1,2 +1,12 @@
-﻿  ranging.cpp
+﻿  inputFromFile.cpp
+D:\my\Fairturn\Fairturn\OPITeamProject\inputFromFile.cpp(40,36): warning C4244: аргумент: преобразование "wchar_t" в "const _Elem", возможна потеря данных
+D:\my\Fairturn\Fairturn\OPITeamProject\inputFromFile.cpp(40,36): warning C4244:         with
+D:\my\Fairturn\Fairturn\OPITeamProject\inputFromFile.cpp(40,36): warning C4244:         [
+D:\my\Fairturn\Fairturn\OPITeamProject\inputFromFile.cpp(40,36): warning C4244:             _Elem=char
+D:\my\Fairturn\Fairturn\OPITeamProject\inputFromFile.cpp(40,36): warning C4244:         ]
+D:\my\Fairturn\Fairturn\OPITeamProject\inputFromFile.cpp(57,40): warning C4244: аргумент: преобразование "wchar_t" в "const _Elem", возможна потеря данных
+D:\my\Fairturn\Fairturn\OPITeamProject\inputFromFile.cpp(57,40): warning C4244:         with
+D:\my\Fairturn\Fairturn\OPITeamProject\inputFromFile.cpp(57,40): warning C4244:         [
+D:\my\Fairturn\Fairturn\OPITeamProject\inputFromFile.cpp(57,40): warning C4244:             _Elem=char
+D:\my\Fairturn\Fairturn\OPITeamProject\inputFromFile.cpp(57,40): warning C4244:         ]
   OPITeamProject.vcxproj -> D:\my\Fairturn\Fairturn\x64\Debug\OPITeamProject.exe
