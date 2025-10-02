@@ -1,64 +1,57 @@
-import os
-import pickle
+﻿import os
 import csv
 from googleapiclient.discovery import build
+from auth_utils import get_credentials  # ✅ подключаем функцию
 
-# Function to download data from Google Sheets to a CSV file
+# Скачивание данных из Google Sheets в CSV
 def download_gsheet_to_csv(spreadsheet_id, worksheet_name, csv_file_path, credentials_path):
-    """Download data from Google Sheets to CSV."""
     try:
-        # Check if the credentials file exists
-        if not os.path.exists(credentials_path):
-            raise FileNotFoundError(f"Credentials file {credentials_path} not found. Please perform authentication.")
-        
-        # Authentication using the token file
-        with open(credentials_path, 'rb') as token:
-            credentials = pickle.load(token)
+        # Получаем всегда валидный токен
+        credentials = get_credentials(token_path=credentials_path, creds_path="credentials.json")
 
-        # Create the API client
+        # Создаем API клиент
         service = build('sheets', 'v4', credentials=credentials)
 
-        # Read data from the spreadsheet
+        # Чтение данных
         range_name = f"{worksheet_name}!A2:Z"
-        result = service.spreadsheets().values().get(spreadsheetId=spreadsheet_id, range=range_name).execute()
+        result = service.spreadsheets().values().get(
+            spreadsheetId=spreadsheet_id,
+            range=range_name
+        ).execute()
         values = result.get('values', [])
 
-        # Check if data is available
         if not values:
-            print("The sheet is empty or no data found.")
+            print("Таблица пуста или данных нет.")
             return
 
-        # Write data to the CSV file
+        # Сохраняем в CSV
         with open(csv_file_path, 'w', newline='', encoding='cp1251') as csvfile:
             writer = csv.writer(csvfile)
             writer.writerows(values)
 
-        print(f"Data successfully saved to file {csv_file_path}")
+        print(f"✅ Данные сохранены в {csv_file_path}")
     except Exception as e:
-        print(f"Error downloading data: {e}")
+        print(f"Ошибка при скачивании: {e}")
+
 
 if __name__ == "__main__":
-    # Console input
-    print("Enter data to download from Google Sheets:")
+    print("Введите данные для скачивания из Google Sheets:")
     spreadsheet_id = input("Spreadsheet ID: ").strip()
-
     with open("id.csv", 'w', newline='', encoding='cp1251') as csvfile:
-            csvfile.write(spreadsheet_id)
+        csvfile.write(spreadsheet_id)
 
     worksheet_name = input("Worksheet name: ").strip()
 
-    # Input with default handling
-    csv_file_path = input("Path to save CSV (default 'output.csv', type 'd' for default): ").strip()
+    csv_file_path = input("Путь для сохранения CSV (по умолчанию 'output.csv', введите 'd' для default): ").strip()
     with open("pathfile.csv", 'w', newline='', encoding='cp1251') as csvfile:
-            csvfile.write('d')
+        csvfile.write('d')
     if csv_file_path.lower() == 'd' or not csv_file_path:
         csv_file_path = 'output.csv'
 
-    credentials_path = input("Path to credentials file (default 'token.pickle', type 'd' for default): ").strip()
+    credentials_path = input("Путь к токену (по умолчанию 'token.pickle', введите 'd' для default): ").strip()
     with open("pathtoken.csv", 'w', newline='', encoding='cp1251') as csvfile:
-            csvfile.write('d')
+        csvfile.write('d')
     if credentials_path.lower() == 'd' or not credentials_path:
         credentials_path = 'token.pickle'
 
-    # Call the function
     download_gsheet_to_csv(spreadsheet_id, worksheet_name, csv_file_path, credentials_path)
