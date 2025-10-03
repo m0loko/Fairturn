@@ -26,11 +26,10 @@ map<string, vector<int>> getSum(map<string, vector<int>> members, vector<string>
         }
 
         string sname = surnames[i];
-        if (sname == "Макаревич" || sname == "Мышковец") {
+        if (sname == "РњС‹С€РєРѕРІРµС†" || sname == "РњР°РєР°СЂРµРІРёС‡") {
             sum -= 2;
         }
 
-        // итог
         if (members[surnames[i]].size() == 4) {
             members[surnames[i]].push_back(sum);
         }
@@ -53,7 +52,7 @@ vector<pair<string, vector<int>>> ranging(map<string, vector<int>> membersList) 
 
     sort(sortedMembers.begin(), sortedMembers.end(),
         [](const pair<string, vector<int>>& a, const pair<string, vector<int>>& b) {
-            return a.second[4] < b.second[4]; // меньше = выше
+            return a.second[4] < b.second[4];
         });
 
     return sortedMembers;
