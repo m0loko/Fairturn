@@ -5,6 +5,8 @@
 #include "parser.h"
 #include "ranging.h"
 #include "menu.h"
+#include <chrono>
+using namespace std::chrono_literals;
 
 int main() {
     //setConsoleSize(70, 50);
@@ -14,8 +16,13 @@ int main() {
     cout << "Running an environment check" << endl;
     this_thread::sleep_for(1500ms);
     system("cls");
-    system("forpython.bat");
-    system("cls");
+    int checkRes = system("forpython.bat");
+    if (checkRes != 0) {
+        cerr << "Cannot open environment check script! (Check forpython.bat)!" << endl;
+    }
+    else {
+        system("cls");
+    }
 
     startWelcomeAnimation(); // Welcome animation
 
@@ -41,14 +48,10 @@ int main() {
         }
         else if (choice == 2) {
             parserIN();
-            system("cls");
             map <string, vector<int>> members = inputFromFile();
             vector<pair<string, vector<int>>> sortedMembers = ranging(members);
-            system("cls");
             writeToFile(sortedMembers);
-            system("cls");
             parserOUT();
-            system("cls");
             printSortedData(sortedMembers);
             cout << "Press Enter: ";
             getchar();

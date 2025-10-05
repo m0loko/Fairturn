@@ -1,6 +1,7 @@
 #include "logo.h"
-
 #include <thread>
+#include <chrono>
+using namespace std::chrono_literals;
 // Function for text animation
 void startWelcomeAnimation() {
     // Array of strings to display as animated text
