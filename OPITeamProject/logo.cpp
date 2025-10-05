@@ -1,4 +1,6 @@
 #include "logo.h"
+
+#include <thread>
 // Function for text animation
 void startWelcomeAnimation() {
     // Array of strings to display as animated text
@@ -21,16 +23,16 @@ void startWelcomeAnimation() {
         // Print each character in the line with a small delay
         for (char c : line) {
             cout << c << flush;  // Immediately output the character to the console
-            Sleep(0.99);            // Delay between characters (in milliseconds)
+            this_thread::sleep_for(0.99ms);            // Delay between characters (in milliseconds)
         }
         cout << endl;
-        Sleep(250);  // Delay between lines
+        this_thread::sleep_for(250ms);  // Delay between lines
     }
-    Sleep(1000);  // Pause before clearing the screen
+    this_thread::sleep_for(1000ms);  // Pause before clearing the screen
     // Clear the screen with a fade-out effect
     for (int i = 0; i < 5; ++i) {
         system("cls");  // Clear the console
-        Sleep(30);
+        this_thread::sleep_for(30ms);
     }
     system("cls");
 }

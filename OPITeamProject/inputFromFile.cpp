@@ -3,12 +3,9 @@
 #include <string>
 #include <vector>
 #include <map>
-#include <Windows.h>
 using namespace std;
 
 map<string, vector<int>> inputFromFile() {
-    SetConsoleCP(CP_UTF8);
-    SetConsoleOutputCP(CP_UTF8);
     setlocale(LC_ALL, "Russian");
 
     map<string, vector<int>> memberList;
@@ -36,7 +33,6 @@ map<string, vector<int>> inputFromFile() {
         string surname;
         wchar_t sym = L',';
 
-        // --- Фамилия ---
         index = line.find_first_of(sym);
         if (index != string::npos) {
             surname = line.substr(0, index);
@@ -47,11 +43,10 @@ map<string, vector<int>> inputFromFile() {
             line.clear();
         }
 
-        if (surname.empty()) continue; // если фамилия пустая, пропускаем строку
+        if (surname.empty()) continue;
 
-        vector<int> data(4, -1); // используем -1 как "пустое" значение
+        vector<int> data(4, -1);
 
-        // --- Остальные поля ---
         for (int i = 0; i < 3; i++) {
             string field;
             index = line.find_first_of(sym);
@@ -64,28 +59,27 @@ map<string, vector<int>> inputFromFile() {
                 line.clear();
             }
 
-            // Игнорируем пустое поле
             if (field.empty()) continue;
 
-            if (i == 2) { // поле "да/нет"
-                if (field == "да" || field == "Да" || field == "yes" || field == "Yes") {
+            if (i == 2) {
+                if (field == "РґР°" || field == "Р”Р°" || field == "yes" || field == "Yes") {
                     data[i] = 10;
                 }
-                else if (field == "нет" || field == "Нет" || field == "no" || field == "No") {
+                else if (field == "РЅРµС‚" || field == "РќРµС‚" || field == "no" || field == "No") {
                     data[i] = 0;
-                } // иначе оставляем -1
+                }
             }
-            else { // числовое поле
+            else {
                 try {
                     data[i] = stoi(field);
                 }
                 catch (...) {
-                    // пропускаем поле, оставляем -1
+                    cerr << "Invalid input from file(maybe wrong data from table)!" << endl;
                 }
             }
         }
 
-        data[3] = currentLab; // текущая лабораторная
+        data[3] = currentLab;
         memberList[surname] = data;
     }
 

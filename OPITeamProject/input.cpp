@@ -3,14 +3,10 @@
 #include <map>
 #include <string>
 #include "input.h"
-#include <Windows.h>
 
 using namespace std;
 
 map<string, vector<int>> dataEntry() {
-    setlocale(LC_ALL, "RU");
-    SetConsoleCP(1251);
-
     map<string, vector<int>> membersListWithNumbers;
     int num, index;
     string sym = " ";
@@ -25,7 +21,7 @@ map<string, vector<int>> dataEntry() {
     cout << "Enter details for each participant in format:\n";
     cout << "<LastName> <labsPassed> <submittingLab> <attended(yes-10 / no-0)> ;\n";
 
-    cin.ignore(); // очистка буфера
+    cin.ignore(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 
     for (int i = 0; i < num; i++) {
         vector<int> numbers(4);
@@ -40,7 +36,7 @@ map<string, vector<int>> dataEntry() {
             numbers[j] = stoi(str.substr(0, index));
             str.erase(0, (index + 1));
         }
-        numbers[3] = currentLab; // добавляем текущую лабу
+        numbers[3] = currentLab; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
         membersListWithNumbers[surname] = numbers;
     }
     system("cls");

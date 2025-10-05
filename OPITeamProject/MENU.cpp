@@ -1,7 +1,7 @@
 #include <iostream>
-#include <windows.h>
 #include <string>
 #include <fstream>
+#include <thread>
 #include <vector>
 
 using namespace std;
@@ -12,7 +12,7 @@ void drawBorderWithText(int width, int height, const vector<string>& lines) {
     // Top border with animation
     for (int i = 0; i < width; i++) {
         cout << "*";
-        Sleep(20);  // Delay
+        this_thread::sleep_for(20ms);  // Delay
     }
     cout << endl;
 
@@ -21,7 +21,7 @@ void drawBorderWithText(int width, int height, const vector<string>& lines) {
         cout << "*";
         for (int j = 0; j < width - 2; j++) cout << " ";
         cout << "*" << endl;
-        Sleep(20);  // Delay
+        this_thread::sleep_for(20ms);  // Delay
     }
 
     // Outputting text with animation
@@ -34,12 +34,12 @@ void drawBorderWithText(int width, int height, const vector<string>& lines) {
 
         for (char c : line) {
             cout << c << flush;
-            Sleep(20);  // Per-character delay
+            this_thread::sleep_for(20ms);  // Per-character delay
         }
 
         for (int j = 0; j < paddingRight; j++) cout << " ";
         cout << "*" << endl;
-        Sleep(20);  //Delay between lines of text
+        this_thread::sleep_for(20ms);  //Delay between lines of text
     }
 
     // Blank lines after text
@@ -47,13 +47,13 @@ void drawBorderWithText(int width, int height, const vector<string>& lines) {
         cout << "*";
         for (int j = 0; j < width - 2; j++) cout << " ";
         cout << "*" << endl;
-        Sleep(20);  // Delay
+        this_thread::sleep_for(20ms);  // Delay
     }
 
     // Bottom border with animation
     for (int i = 0; i < width; i++) {
         cout << "*";
-        Sleep(20);  // Delay
+        this_thread::sleep_for(20ms);  // Delay
     }
     cout << endl;
 }
@@ -77,16 +77,16 @@ void   welcomeAnimation() {
         // Print each character in the line with a small delay
         for (char c : line) {
             cout << c << flush;  // Immediately output the character to the console
-            Sleep(0.99);            // Delay between characters (in milliseconds)
+            this_thread::sleep_for(0.99ms);            // Delay between characters (in milliseconds)
         }
         cout << endl;
-        Sleep(500);  // Delay between lines
+        this_thread::sleep_for(500ms);  // Delay between lines
     }
-    Sleep(800);  // Pause before clearing the screen
+    this_thread::sleep_for(800ms);  // Pause before clearing the screen
     // Clear the screen with a fade-out effect
     for (int i = 0; i < 5; ++i) {
         system("cls");  // Clear the console
-        Sleep(50);
+        this_thread::sleep_for(50ms);
     }
     system("cls");
 }
@@ -110,17 +110,17 @@ void mainMenu() {
 }
 
 // Function to change the window title
-void setConsoleTitle(const string& title) {
-    setlocale(LC_CTYPE, "Russian");
-    wstring wideTitle(title.begin(), title.end());
-    SetConsoleTitleW(wideTitle.c_str());
-}
-
-// Function to set the console size
-void setConsoleSize(int width, int height) {
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
-    SMALL_RECT rect = { 0, 0, width - 1, height - 1 };
-    COORD coord = { width, height };
-    SetConsoleScreenBufferSize(hConsole, coord);
-    SetConsoleWindowInfo(hConsole, TRUE, &rect);
-}
+// void setConsoleTitle(const string& title) {
+//     setlocale(LC_CTYPE, "Russian");
+//     wstring wideTitle(title.begin(), title.end());
+//     SetConsoleTitle(wideTitle.c_str());
+// }
+//
+// // Function to set the console size
+// void setConsoleSize(int width, int height) {
+//     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+//     SMALL_RECT rect = { 0, 0, width - 1, height - 1 };
+//     COORD coord = { width, height };
+//     SetConsoleScreenBufferSize(hConsole, coord);
+//     SetConsoleWindowInfo(hConsole, TRUE, &rect);
+// }

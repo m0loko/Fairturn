@@ -1,3 +1,4 @@
+#include <thread>
 #include "Header.h"
 #include "input.h"
 #include "logo.h"
@@ -6,12 +7,12 @@
 #include "menu.h"
 
 int main() {
-    setConsoleSize(70, 50);
+    //setConsoleSize(70, 50);
     setlocale(LC_CTYPE, "Russian");
-    setConsoleTitle("FAIRTURN");
+    //setConsoleTitle("FAIRTURN");
     setlocale(LC_ALL, "Russian");
     cout << "Running an environment check" << endl;
-    Sleep(1500);
+    this_thread::sleep_for(1500ms);
     system("cls");
     system("forpython.bat");
     system("cls");
@@ -26,7 +27,7 @@ int main() {
 
         for (char c : message) {
             cout << c << flush;
-            Sleep(20);  // Pause between characters
+            this_thread::sleep_for(20ms);  // Pause between characters
         }
         cin >> choice;
         system("cls");
@@ -62,7 +63,7 @@ int main() {
 
             for (char c : message) {
                 cout << c << flush;
-                Sleep(20);  // Pause between characters
+                this_thread::sleep_for(20ms);  // Pause between characters
             }
             cout << endl;
             break;  // Exit the program
@@ -70,10 +71,10 @@ int main() {
         else {
             vector<string> error = { "Incorrect choice. Try again!" };
             drawBorderWithText(50, 10, error);  // Error during selection
-            Sleep(500);
+            this_thread::sleep_for(500ms);
             for (int i = 0; i < 3; i++) {
                 cout << ".";
-                Sleep(500);
+                this_thread::sleep_for(500ms);
             }
             cout << endl << "Little easter egg!" << endl;
             system("cls");
