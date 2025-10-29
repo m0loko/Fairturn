@@ -17,7 +17,7 @@ map<string, vector<int>> inputFromFile() {
 
     ifstream in(path);
     if (!in.is_open()) {
-        cout << "Error opening file!" << endl;
+        cerr << "Error opening file!" << endl;
         return memberList;
     }
 
@@ -75,6 +75,10 @@ map<string, vector<int>> inputFromFile() {
                 }
                 catch (...) {
                     cerr << "Invalid input from file(maybe wrong data from table)!" << endl;
+                    in.close();
+                    getchar();
+                    getchar();
+                    exit(-1);
                 }
             }
         }
