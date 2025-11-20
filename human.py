@@ -6,7 +6,7 @@
             self.name = name.capitalize().split(maxsplit=1)[0]
             self.prevLabs = int(prevLabs)
             self.submittingLabs = int(submittingLabs)
-            if prevLabs >= submittingLabs:
+            if self.prevLabs >= self.submittingLabs:
                 raise Exception(f"\033[31mError in Human.__init__(). PrevLabs cannot be greater than submittingLabs. Problem with {name}\033[0m")
             self.attended = 0
             if(attended.lower() == "да"):
