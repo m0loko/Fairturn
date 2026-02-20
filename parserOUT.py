@@ -31,6 +31,7 @@ def upload_csv_to_gsheet(csv_file_path, spreadsheet_id, worksheet_name, credenti
 
         print(f"✅ Data from {csv_file_path} uploaded into {spreadsheet_id}:{worksheet_name}")
     except Exception as e:
+        os.remove(credentials_path)
         raise Exception(f"\033[31mUpload error: {e}\033[0m")
 
 
