@@ -31,7 +31,7 @@ def download_gsheet_to_csv(spreadsheet_id, worksheet_name, csv_file_path, creden
 
         print(f"Data saved into {csv_file_path}")
     except Exception as e:
-
+        os.remove(credentials_path)
         raise Exception(f"\033[31mDownload error: {e}\033[0m")
 
 
